@@ -13,7 +13,7 @@ RUN pip install "poetry==$POETRY_VERSION"
 
 RUN python -m pip install --user pipx
 RUN pipx install black
-RUN pipx install dvs
+RUN pipx install dvc
 
 WORKDIR /deps
 COPY poetry.lock pyproject.toml /deps/
