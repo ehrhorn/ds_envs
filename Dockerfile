@@ -7,7 +7,8 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=on \
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -yq \
   curl \
-  git
+  git \
+  fish
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 RUN curl -fsSL https://starship.rs/install.sh | bash -s -- --yes
