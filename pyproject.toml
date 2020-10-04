@@ -8,6 +8,8 @@ authors = ["Mads Ehrhorn <meh@venzonxt.com>"]
 python = "3.8.5"
 plotly = "*"
 streamlit = "*"
+azure-common = "*"
+azure-mgmt-resource = "*"
 
 [tool.poetry.dev-dependencies]
 
