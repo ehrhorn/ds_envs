@@ -10,6 +10,7 @@ plotly = "*"
 streamlit = "*"
 azure-common = "*"
 azure-mgmt-resource = "*"
+azure-storage-blob = "*"
 
 [tool.poetry.dev-dependencies]
 

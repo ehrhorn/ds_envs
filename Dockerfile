@@ -8,7 +8,9 @@ RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -yq \
   curl \
   git
+
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN curl -fsSL https://starship.rs/install.sh | bash
 RUN pip install "poetry==$POETRY_VERSION"
 
 RUN python -m pip install --user pipx
