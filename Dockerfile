@@ -10,7 +10,7 @@ RUN apt-get update && \
   git
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-RUN curl -fsSL https://starship.rs/install.sh | bash
+RUN curl -fsSL https://starship.rs/install.sh | bash -s -- --yes
 RUN pip install "poetry==$POETRY_VERSION"
 
 RUN python -m pip install --user pipx
