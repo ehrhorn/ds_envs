@@ -10,8 +10,10 @@ RUN apt-get update && \
   git
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 RUN pip install "poetry==$POETRY_VERSION"
+
 RUN python -m pip install --user pipx
-RUN pipx install black dvc
+RUN pipx install black
+RUN pipx install dvs
 
 WORKDIR /deps
 COPY poetry.lock pyproject.toml /deps/
