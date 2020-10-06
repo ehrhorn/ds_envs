@@ -11,6 +11,10 @@ streamlit = "*"
 azure-common = "*"
 azure-mgmt-resource = "*"
 azure-storage-blob = "*"
+azure-cli-core = "*"
+azure-identity = "*"
+adal = "*"
+msrestazure = "*"
 
 [tool.poetry.dev-dependencies]
 
