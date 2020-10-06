@@ -1,4 +1,4 @@
-FROM python:3.8.5-slim-buster
+FROM python:3.7.6-slim-buster
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=on \
   POETRY_VERSION=1.1.0 \

@@ -5,7 +5,7 @@ description = "Data science environments"
 authors = ["Mads Ehrhorn <meh@venzonxt.com>"]
 
 [tool.poetry.dependencies]
-python = "3.8.5"
+python = "3.7.6"
 plotly = "*"
 streamlit = "*"
 azure-common = "*"
