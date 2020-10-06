@@ -8,3 +8,4 @@ subscription = next(subscription_client.subscriptions.list())
 print(dir(subscription))
 
 credential = DefaultAzureCredential()
+print(credential)

@@ -1,7 +1,7 @@
 FROM python:3.8.5-slim-buster
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=on \
-  POETRY_VERSION=1.0.0 \
+  POETRY_VERSION=1.1.0 \
   PATH="/root/.local/bin:${PATH}"
 
 RUN apt-get update && \
@@ -9,6 +9,7 @@ RUN apt-get update && \
   curl \
   git \
   fish
+
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 RUN curl -fsSL https://starship.rs/install.sh | bash -s -- --yes
