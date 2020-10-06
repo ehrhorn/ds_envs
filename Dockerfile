@@ -24,3 +24,5 @@ COPY poetry.lock pyproject.toml /deps/
 
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
+
+RUN mkdir -p /root/.ssh
