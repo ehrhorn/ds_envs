@@ -1,0 +1,4 @@
+[core]
+    remote = azure_ds_envs
+['remote "azure_ds_envs"']
+    url = azure://dsenvsblob
