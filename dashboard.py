@@ -16,8 +16,8 @@ subscription_id = next(subscription_client.subscriptions.list()).subscription_id
 
 ws = Workspace(
     subscription_id=subscription_id,
-    resource_group=os.environ["ML_RG"],
-    workspace_name=os.environ["ML_WS"],
+    resource_group="ds_envs_RG",
+    workspace_name="ds_envs_ws",
     auth=cli_auth,
 )
 datastore = Datastore.get(ws, datastore_name="ds_envs_datastore")
