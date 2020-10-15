@@ -1,7 +1,9 @@
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import tensorflow as tf
 
 
@@ -61,3 +63,57 @@ def create_model(
         optimizer=tf.optimizers.Adam(learning_rate=0.1), loss="mean_absolute_error"
     )
     return model
+
+
+def plot_loss(history):
+    fig, ax = plt.subplots()
+    ax.plot(history["loss"], label="loss")
+    ax.plot(history["val_loss"], label="val_loss")
+    ax.set_ylim([0, 10])
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("Error [MPG]")
+    ax.legend()
+    ax.grid(True)
+    return fig
+
+
+def plot_horsepower(datasets, x, y):
+    fig, ax = plt.subplots()
+    ax.scatter(
+        datasets["train_features"]["Horsepower"], datasets["train_labels"], label="Data"
+    )
+    ax.plot(x, y, color="k", label="Predictions")
+    ax.set_xlabel("Horsepower")
+    ax.set_ylabel("MPG")
+    ax.legend()
+    return fig
+
+
+def plot_errors(datasets, test_predictions):
+    fig, ax = plt.subplots()
+    ax.scatter(datasets["test_labels"], test_predictions)
+    ax.set_xlabel("True Values [MPG]")
+    ax.set_ylabel("Predictions [MPG]")
+    lims = [0, 50]
+    ax.set_xlim(lims)
+    ax.set_ylim(lims)
+    ax.plot(lims, lims)
+    ax.set_aspect("equal")
+    return fig
+
+
+def plot_residuals(test_predictions, test_labels):
+    fig, ax = plt.subplots()
+    error = test_predictions - test_labels
+    ax.hist(error, bins="auto")
+    ax.set_xlabel("Prediction Error [MPG]")
+    ax.set_ylabel("Count")
+    return fig
+
+
+def plot_distributions(raw_dataset):
+    fig = sns.pairplot(
+        raw_dataset[["MPG", "Cylinders", "Displacement", "Weight"]],
+        diag_kind="kde",
+    )
+    return fig
