@@ -30,7 +30,7 @@ COPY poetry.lock pyproject.toml /deps/
 
 ENV PYTHON_VERSION=3.7.6 \
   POETRY_VERSION=1.1.2 \
-  PATH="/root/.local/bin:/root/.pyenv/shims:/root/.pyenv/bin:/root/.pyenv/versions/$PYTHON_VERSION/bin:$PATH"
+  PATH="/root/.local/bin:/root/.pyenv/shims:/root/.pyenv/bin:/root/.pyenv/versions/${PYTHON_VERSION}/bin:$PATH"
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
   && curl -fsSL https://starship.rs/install.sh | bash -s -- --yes \

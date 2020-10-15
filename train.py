@@ -10,8 +10,15 @@ import custom_modules as cm
 
 print("Available GPUs: {}".format(tf.config.list_physical_devices("GPU")))
 
+
 run = Run.get_context()
 ws = run.experiment.workspace
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--con_str", type=str, help="Connection string")
+args = parser.parse_args()
+
+os.environ["AZURE_STORAGE_CONNECTION_STRING"] = args.con_str
 
 run_id = run.get_details()["runId"]
 

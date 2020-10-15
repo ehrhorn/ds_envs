@@ -1,5 +1,7 @@
 import os
 from azure.common.client_factory import get_client_from_cli_profile
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 from azure.mgmt.resource import SubscriptionClient
 from azureml.core import Environment
 from azureml.core import Experiment
@@ -10,6 +12,18 @@ from azureml.core.authentication import AzureCliAuthentication
 cli_auth = AzureCliAuthentication()
 subscription_client = get_client_from_cli_profile(SubscriptionClient)
 subscription_id = next(subscription_client.subscriptions.list()).subscription_id
+
+key_vault_name = "meh-key-vault"
+secret_name = "dsenvsstorage-con-str"
+key_vault_uri = f"https://{key_vault_name}.vault.azure.net"
+credentials = DefaultAzureCredential(
+    exclude_environment_credential=True,
+    exclude_managed_identity_credential=True,
+    exclude_visual_studio_code_credential=True,
+    exclude_shared_token_cache_credential=True,
+)
+client = SecretClient(vault_url=key_vault_uri, credential=credentials)
+connection_string = client.get_secret(secret_name).value
 
 ws = Workspace(
     subscription_id=subscription_id,
@@ -27,11 +41,14 @@ ds_envs_env.python.user_managed_dependencies = True
 #     workspace=ws, useDocker=True, pushImageToWorkspaceAcr=True
 # )
 
+script_params = ["--con_str", connection_string]
+
 src = ScriptRunConfig(
     source_directory="./",
     script="train.py",
     compute_target="local",
     environment=ds_envs_env,
+    arguments=script_params,
 )
 
 # Set compute target
