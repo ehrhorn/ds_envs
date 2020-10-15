@@ -6,6 +6,8 @@ import pandas as pd
 import seaborn as sns
 import tensorflow as tf
 
+plt.style.use(["ggplot"])
+
 
 def read_dataset(file_path: Path) -> pd.DataFrame:
     dataset = pd.read_csv(file_path)
