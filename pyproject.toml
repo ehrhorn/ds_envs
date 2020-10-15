@@ -22,6 +22,7 @@ azure-storage-blob = "*"
 azure-cli-core = "*"
 azure-identity = "*"
 azure-keyvault = "*"
+azureml-sdk = "*"
 adal = "*"
 msrestazure = "*"
 

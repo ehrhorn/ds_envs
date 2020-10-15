@@ -6,7 +6,7 @@
 	"context": "..",
 	// "image": "ehrhorn/ds_envs:0.3",
 	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
-	"dockerFile": "../Dockerfile",
+	"dockerFile": "${localWorkspaceFolder}/.devcontainer/Dockerfile",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.shell.linux": "fish"
@@ -27,7 +27,7 @@
 	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
 	"runArgs": [
 		"--env-file",
-		"./.devcontainer/devcontainer.env"
+		"${localWorkspaceFolder}/.devcontainer/devcontainer.env"
 	]
 	// Uncomment to use the Docker CLI from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker.
 	// "mounts": [ "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind" ],

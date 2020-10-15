@@ -1,11 +1,8 @@
 import os
 import pickle
 from pathlib import Path
-from azure.common.client_factory import get_client_from_cli_profile
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
-from azure.mgmt.resource import SubscriptionClient
-from azure.storage.blob import BlobClient
+from azureml.core import Datastore
+from azureml.core.run import Run
 import dvc.api
 import git
 import tensorflow as tf
@@ -13,46 +10,26 @@ import custom_modules as cm
 
 print("Available GPUs: {}".format(tf.config.list_physical_devices("GPU")))
 
-env_type = os.environ["ENV_TYPE"]
-key_vault_name = os.environ["KEY_VAULT_NAME"]
-key_vault_uri = f"https://{key_vault_name}.vault.azure.net"
-secret_name = os.environ["SECRET_NAME"]
+run = Run.get_context()
+ws = run.experiment.workspace
 
-if env_type == "dev":
-    print("This is a dev box")
-    subscription_client = get_client_from_cli_profile(SubscriptionClient)
+run_id = run.get_details()["runId"]
 
-    credentials = DefaultAzureCredential(
-        exclude_environment_credential=True,
-        exclude_managed_identity_credential=True,
-        exclude_visual_studio_code_credential=True,
-        exclude_shared_token_cache_credential=True,
-    )
-    client = SecretClient(vault_url=key_vault_uri, credential=credentials)
-    connection_string = client.get_secret(secret_name).value
-else:
-    print("This is not a dev box")
-
-os.environ["AZURE_STORAGE_CONNECTION_STRING"] = connection_string
+datastore = Datastore.get(ws, datastore_name="ds_envs_datastore")
 
 resource_url = dvc.api.get_url("data/dataset.csv", repo="./")
 split_url = resource_url.split("/")
 container = split_url[2]
-blob = split_url[3] + "/" + split_url[4]
+prefix = split_url[3]
+file = split_url[4]
 
-blob = BlobClient.from_connection_string(
-    conn_str=connection_string, container_name=container, blob_name=blob
-)
-
-with open("./data/dataset.csv", "wb") as f:
-    blob_data = blob.download_blob()
-    blob_data.readinto(f)
+datastore.download(target_path="./data", prefix=prefix)
 
 repo = git.Repo(search_parent_directories=True)
 sha = repo.head.object.hexsha
 
-dataset_path = Path("./data/dataset.csv")
-output_path = Path("./models/{}".format(sha))
+dataset_path = Path("./data").joinpath(prefix).joinpath(file)
+output_path = Path("./outputs").joinpath("runs").joinpath(sha).joinpath(run_id)
 output_path.mkdir(exist_ok=True, parents=True)
 
 dataset = cm.read_dataset(dataset_path)
@@ -80,3 +57,7 @@ with open(output_path.joinpath("raw_dataset.pkl"), "wb") as f:
     pickle.dump(raw_dataset, f)
 
 model.save(output_path.joinpath("my_model"))
+
+output_files = [str(f) for f in output_path.rglob("*") if f.is_file()]
+print(output_files)
+datastore.upload_files(output_files, target_path="runs/{}/{}".format(sha, run_id))

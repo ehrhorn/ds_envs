@@ -67,8 +67,8 @@ def create_model(
 
 def plot_loss(history):
     fig, ax = plt.subplots()
-    ax.plot(history["loss"], label="loss")
-    ax.plot(history["val_loss"], label="val_loss")
+    ax.plot(history["loss"], label="Train loss")
+    ax.plot(history["val_loss"], label="Validation loss")
     ax.set_ylim([0, 10])
     ax.set_xlabel("Epoch")
     ax.set_ylabel("Error [MPG]")
