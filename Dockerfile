@@ -41,6 +41,5 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
   && pip install "poetry==$POETRY_VERSION" \
   && python -m pip install --user pipx \
   && pipx install black \
-  && pipx install 'dvc[azure]' \
   && poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
