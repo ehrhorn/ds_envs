@@ -1,3 +1,5 @@
+import socket
+import urllib.request
 from azure.common.client_factory import get_client_from_cli_profile
 from azure.mgmt.resource import SubscriptionClient
 from azureml.core import Environment
@@ -6,6 +8,9 @@ from azureml.core import ScriptRunConfig
 from azureml.core import Workspace
 from azureml.core.authentication import AzureCliAuthentication
 from ds_envs.modules.utils import get_project_root
+
+external_ip = urllib.request.urlopen("https://ident.me").read().decode("utf8")
+ip = socket.gethostbyname(socket.gethostname())
 
 cli_auth = AzureCliAuthentication()
 subscription_client = get_client_from_cli_profile(SubscriptionClient)
@@ -18,13 +23,27 @@ ws = Workspace(
     auth=cli_auth,
 )
 
+dataset_version = 1
+arguments = [
+    "--remote_debug",
+    "--remote_debug_connection_timeout",
+    300,
+    "--remote_debug_client_ip",
+    ip,
+    "--remote_debug_port",
+    5678,
+    "--version",
+    dataset_version,
+]
+
+
 env = Environment.get(workspace=ws, name="ds_envs")
 
 src = ScriptRunConfig(
     source_directory=get_project_root() / "ds_envs" / "cloud",
     script="train.py",
-    arguments=["--version", 1],
-    compute_target="cpu",
+    arguments=arguments,
+    compute_target="local",
     environment=env,
 )
 
