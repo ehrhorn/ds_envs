@@ -1,9 +1,13 @@
 import argparse
+import os
 from azureml.core import Dataset
 from azureml.core import Datastore
 from azureml.core.run import Run
 import matplotlib.pyplot as plt
 import mlflow
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
 import tensorflow as tf
 
 import custom_modules as cm

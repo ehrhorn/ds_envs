@@ -1,0 +1,4 @@
+{
+    "Id": "ds-envs-ws-exp1-debug",
+    "Scope": "/subscriptions/c7305d69-84fa-4657-9c0a-579792d1c0be/resourceGroups/ds_envs_RG/providers/Microsoft.MachineLearningServices/workspaces/ds_envs_ws/experiments/ds-envs-ws-exp1-debug"
+}

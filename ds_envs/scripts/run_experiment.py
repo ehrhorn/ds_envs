@@ -24,7 +24,7 @@ src = ScriptRunConfig(
     source_directory=get_project_root() / "ds_envs" / "cloud",
     script="train.py",
     arguments=["--version", 1],
-    compute_target="cpu",
+    compute_target="local",
     environment=env,
 )
 

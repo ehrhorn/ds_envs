@@ -1,0 +1,83 @@
+{
+    "script": "ds_envs/scripts/run_experiment.py",
+    "arguments": [],
+    "framework": "Python",
+    "communicator": "None",
+    "target": "local",
+    "environment": {
+        "name": "ds-envs-ws-env1",
+        "version": "1",
+        "python": {
+            "interpreterPath": "python",
+            "userManagedDependencies": false,
+            "condaDependencies": {
+                "name": "ds_envs",
+                "channels": [
+                    "defaults"
+                ],
+                "dependencies": [
+                    "python=3.7.6",
+                    "pip",
+                    {
+                        "pip": [
+                            "data-science-types==0.2.19",
+                            "numpy==1.18.5",
+                            "pandas==1.1.3",
+                            "matplotlib==3.3.2",
+                            "tensorflow==2.3.1",
+                            "tensorflow-probability==0.11.1",
+                            "azureml-sdk==1.16.0",
+                            "mlflow==1.11.0",
+                            "azureml-mlflow==1.16.0",
+                            "debugpy==1.0.0"
+                        ]
+                    }
+                ]
+            },
+            "baseCondaEnvironment": null
+        },
+        "environmentVariables": {},
+        "docker": {
+            "baseImage": "mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04",
+            "baseDockerfile": null,
+            "baseImageRegistry": {
+                "address": null,
+                "username": null,
+                "password": null
+            },
+            "enabled": false,
+            "arguments": []
+        },
+        "spark": {
+            "repositories": [],
+            "packages": [],
+            "precachePackages": true
+        },
+        "inferencingStackVersion": null
+    },
+    "history": {
+        "outputCollection": true,
+        "snapshotProject": false,
+        "directoriesToWatch": [
+            "logs"
+        ]
+    },
+    "docker": {
+        "useDocker": true
+    },
+    "data": {
+        "fuel_efficiency": {
+            "dataLocation": {
+                "dataset": {
+                    "id": "c1dced4e-f59b-45fb-8061-607d85461c32"
+                },
+                "dataPath": null
+            },
+            "createOutputDirectories": false,
+            "mechanism": "Direct",
+            "environmentVariableName": "fuel_efficiency",
+            "pathOnCompute": null,
+            "overwrite": false
+        }
+    }
+}
