@@ -1,8 +1,10 @@
 import argparse
 import os
+import socket
 from azureml.core import Dataset
 from azureml.core import Datastore
 from azureml.core.run import Run
+import debugpy
 import matplotlib.pyplot as plt
 import mlflow
 
@@ -10,15 +12,48 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 import tensorflow as tf
 
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
 import custom_modules as cm
 
 print("Available GPUs: {}".format(tf.config.list_physical_devices("GPU")))
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--version", type=int)
+parser.add_argument("--remote_debug", action="store_true")
+parser.add_argument(
+    "--remote_debug_connection_timeout",
+    type=int,
+    default=300,
+    help=f"Defines how much time the AML compute target "
+    f"will await a connection from a debugger client (VSCODE).",
+)
+parser.add_argument(
+    "--remote_debug_client_ip", type=str, help=f"Defines IP Address of VS Code client"
+)
+parser.add_argument(
+    "--remote_debug_port",
+    type=int,
+    default=5678,
+    help=f"Defines Port of VS Code client",
+)
 args = parser.parse_args()
 
 run = Run.get_context()
+
+if args.remote_debug:
+    print(f"Timeout for debug connection: {args.remote_debug_connection_timeout}")
+    try:
+        ip = args.remote_debug_client_ip
+    except Exception:
+        print("Need to supply IP address for VS Code client")
+    ip = socket.gethostbyname(socket.gethostname())
+    print(f"ip_address: {ip}")
+    debugpy.listen(address=(ip, args.remote_debug_port))
+    debugpy.wait_for_client()
+    print(f"Debugger attached = {debugpy.is_client_connected()}")
+
+
 ws = run.experiment.workspace
 
 datastore = Datastore.get(ws, datastore_name="ds_envs_datastore")

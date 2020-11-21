@@ -10,6 +10,20 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Azure Machine Learning Compute: remote debug",
+            "type": "python",
+            "request": "attach",
+            "port": 5678,
+            "host": "10.0.0.4",
+            "redirectOutput": true,
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/ds_envs/cloud/train.py",
+                    "remoteRoot": "."
+                }
+            ]
         }
     ]
 }

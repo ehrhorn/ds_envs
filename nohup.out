@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "ds_envs/scripts/run_experiment.py", line 50, in <module>
+    run = experiment.submit(config=src)
+  File "/home/ehrhorn/work/ds_envs/.venv/lib/python3.8/site-packages/azureml/core/experiment.py", line 219, in submit
+    run = submit_func(config, self.workspace, self.name, **kwargs)
+  File "/home/ehrhorn/work/ds_envs/.venv/lib/python3.8/site-packages/azureml/core/script_run_config.py", line 56, in submit
+    run = _commands.start_run(project, run_config,
+  File "/home/ehrhorn/work/ds_envs/.venv/lib/python3.8/site-packages/azureml/_execution/_commands.py", line 118, in start_run
+    return _start_internal(project_object, run_config_object, prepare_check=check,
+  File "/home/ehrhorn/work/ds_envs/.venv/lib/python3.8/site-packages/azureml/_execution/_commands.py", line 424, in _start_internal
+    _raise_request_error(response, "starting run")
+  File "/home/ehrhorn/work/ds_envs/.venv/lib/python3.8/site-packages/azureml/_execution/_commands.py", line 565, in _raise_request_error
+    raise ExperimentExecutionException(response_message)
+azureml.exceptions._azureml_exception.ExperimentExecutionException: ExperimentExecutionException:
+	Message: {
+    "error_details": {
+        "componentName": "execution",
+        "correlation": {
+            "operation": "e4a2ed99d2cc0745a6b548e39716b0e5",
+            "request": "fbf4e70268f86b4f"
+        },
+        "environment": "westeurope",
+        "error": {
+            "code": "UserError",
+            "innerError": {
+                "code": "BadArgument",
+                "innerError": {
+                    "code": "FailDeserializeRun"
+                }
+            },
+            "message": "Failed to deserialize run definition.",
+            "messageFormat": "Failed to deserialize run definition."
+        },
+        "location": "westeurope",
+        "time": "2020-10-24T08:43:14.8060297+00:00"
+    },
+    "status_code": 400,
+    "url": "https://westeurope.experiments.azureml.net/execution/v1.0/subscriptions/c7305d69-84fa-4657-9c0a-579792d1c0be/resourceGroups/ds_envs_RG/providers/Microsoft.MachineLearningServices/workspaces/ds_envs_ws/experiments/my_experiment/startrun?runId=my_experiment_1603528994_1345c236"
+}
+	InnerException None
+	ErrorResponse 
+{
+    "error": {
+        "message": "{\n    \"error_details\": {\n        \"componentName\": \"execution\",\n        \"correlation\": {\n            \"operation\": \"e4a2ed99d2cc0745a6b548e39716b0e5\",\n            \"request\": \"fbf4e70268f86b4f\"\n        },\n        \"environment\": \"westeurope\",\n        \"error\": {\n            \"code\": \"UserError\",\n            \"innerError\": {\n                \"code\": \"BadArgument\",\n                \"innerError\": {\n                    \"code\": \"FailDeserializeRun\"\n                }\n            },\n            \"message\": \"Failed to deserialize run definition.\",\n            \"messageFormat\": \"Failed to deserialize run definition.\"\n        },\n        \"location\": \"westeurope\",\n        \"time\": \"2020-10-24T08:43:14.8060297+00:00\"\n    },\n    \"status_code\": 400,\n    \"url\": \"https://westeurope.experiments.azureml.net/execution/v1.0/subscriptions/c7305d69-84fa-4657-9c0a-579792d1c0be/resourceGroups/ds_envs_RG/providers/Microsoft.MachineLearningServices/workspaces/ds_envs_ws/experiments/my_experiment/startrun?runId=my_experiment_1603528994_1345c236\"\n}"
+    }
+}
